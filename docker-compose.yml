@@ -19,7 +19,7 @@ services:
       - traefik.enable=true
 
   db:
-    image: postgres:15
+    image: postgres:16
     volumes:
       - app-db-data:/var/lib/postgresql/data/pgdata
     env_file:
