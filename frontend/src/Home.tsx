@@ -1,18 +1,11 @@
-import { useState } from "react";
-
 export default function Home() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1 className="text-3xl font-bold">count: {count}</h1>
-      <button
-        type="button"
-        onClick={() => setCount(count + 1)}
-        className="ring"
+      <a
+        href={`https://github.com/login/oauth/authorize?client_id=${import.meta.env.GITHUB_OAUTH_CLIENT_ID}&scope=user:email`}
       >
-        add
-      </button>
+        Login with GitHub
+      </a>
     </>
   );
 }
