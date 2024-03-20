@@ -1,29 +1,30 @@
+/** @type { import("eslint").Linter.Config } */
 module.exports = {
   root: true,
-  env: { browser: true, es2024: true },
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:react-hooks/recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:svelte/recommended",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
   parserOptions: {
-    ecmaVersion: "latest",
     sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
+    ecmaVersion: "latest",
+    extraFileExtensions: [".svelte"],
   },
-  plugins: ["react-refresh"],
-  rules: {
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
+  env: {
+    browser: true,
+    es2024: true,
+    node: true,
   },
-  settings: {
-    react: { version: "detect" },
-  },
+  overrides: [
+    {
+      files: ["*.svelte"],
+      parser: "svelte-eslint-parser",
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
+    },
+  ],
 };
