@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  proxy:
+    ports:
+      - "8338:80"
+      - "8080:8080"
+    image: traefik:v2.2
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+      - --accesslog
+      - --log
+      # Enable the Dashboard and API (port 8080) in insecure mode for local development
+      - --api
+      - --api.insecure=true
+    labels:
+      - traefik.enable=true
+
+  db:
+    image: postgres:15
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - dev.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./backend:/app
+    env_file:
+      - dev.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend-http.rule=PathPrefix(`/api`)
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - dev.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend-http.rule=PathPrefix(`/`)
+
+volumes:
+  app-db-data:
