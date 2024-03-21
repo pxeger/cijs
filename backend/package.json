@@ -8,9 +8,12 @@
     "migrate": "node-pg-migrate --template-file-name migration_template.ts"
   },
   "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "node-pg-migrate": "^6.2.2",
     "pg": "^8.11.3",
-    "postgres": "^3.4.3"
+    "postgres": "^3.4.3",
+    "reflect-metadata": "^0.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.0",

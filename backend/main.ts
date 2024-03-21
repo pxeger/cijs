@@ -1,5 +1,6 @@
 import { type Server } from "bun";
 import {} from "./db"; // run migrations
+import HTTPError from "./errors";
 
 console.log(new Date(), "starting API");
 
@@ -24,6 +25,14 @@ Bun.serve({
       return new Response("404 not found", { status: 404 });
     }
     const handlerModule = (await import(route.filePath)) as Module<Route>;
-    return await handlerModule.default(route.params ?? {}, request, server);
+    try {
+      return await handlerModule.default(route.params ?? {}, request, server);
+    } catch (e) {
+      if (e instanceof HTTPError) {
+        return new Response(JSON.stringify(e.body), { status: e.code });
+      } else {
+        throw e;
+      }
+    }
   },
 });
