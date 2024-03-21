@@ -1,4 +1,5 @@
 import { type Server } from "bun";
+import {} from "./db"; // run migrations
 
 console.log(new Date(), "starting API");
 
