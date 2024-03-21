@@ -1,7 +1,7 @@
 import migrate from "node-pg-migrate";
-import { Client } from "pg";
+import { Client, type QueryResult, type QueryResultRow } from "pg";
 
-const db = new Client({
+export const db = new Client({
   host: Bun.env["POSTGRES_HOST"]!,
   port: parseInt(Bun.env["POSTGRES_PORT"] || "5432"),
   database: Bun.env["POSTGRES_DB"]!,
@@ -17,4 +17,17 @@ await migrate({
   migrationsTable: "pgmigrations",
 });
 
-export default db;
+export async function sql(
+  [query, ...parts]: TemplateStringsArray,
+  ...params: unknown[]
+): Promise<QueryResult<QueryResultRow>> {
+  if (query === undefined) {
+    throw new RangeError("query must not be undefined");
+  }
+  let i = 1;
+  for (const part of parts) {
+    query += "$" + i.toString() + part;
+    i += 1;
+  }
+  return await db.query(query, params);
+}
