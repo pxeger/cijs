@@ -6,4 +6,9 @@ export default defineConfig({
   test: {
     include: ["src/**/*.{test,spec}.{js,ts}"],
   },
+  define: {
+    "import.meta.env.GITHUB_OAUTH_CLIENT_ID": JSON.stringify(
+      process.env["GITHUB_OAUTH_CLIENT_ID"],
+    ),
+  },
 });
