@@ -1,8 +1,9 @@
 {
+  "type": "module",
   "scripts": {
     "dev": "bun run --watch main.ts",
     "check": "tsc --noEmit",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "migrate": "node-pg-migrate --template-file-name migration_template.ts"
   },
@@ -12,12 +13,13 @@
     "postgres": "^3.4.3"
   },
   "devDependencies": {
+    "@eslint/js": "^8.57.0",
     "@types/bun": "^1.0.8",
+    "@types/eslint__js": "^8.42.3",
     "@types/express": "^4.17.21",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
     "eslint": "^8.57.0",
     "prettier": "4.0.0-alpha.8",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "typescript-eslint": "^7.3.1"
   }
 }
