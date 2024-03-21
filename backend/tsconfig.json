@@ -8,6 +8,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
 
+    "paths": {
+      "@/*": ["./*"]
+    },
+
     // bundler mode
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
